@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Nativefier by jiahaog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Nativefier</h1>
+      <h2 class="project-tagline">Wrap any web page natively without even thinking, across Windows, OSX and Linux</h2>
+      <a href="https://github.com/jiahaog/nativefier" class="btn">View on GitHub</a>
+      <a href="https://github.com/jiahaog/nativefier/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/jiahaog/nativefier/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="nativefier" class="anchor" href="#nativefier" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nativefier</h1>
+
+<p><a href="https://travis-ci.org/jiahaog/nativefier"><img src="https://travis-ci.org/jiahaog/nativefier.svg?branch=development" alt="Build Status"></a>
+<a href="https://www.npmjs.com/package/nativefier"><img src="https://badge.fury.io/js/nativefier.svg" alt="npm version"></a>
+<a href="https://codeclimate.com/github/jiahaog/nativefier"><img src="https://codeclimate.com/github/jiahaog/nativefier/badges/gpa.svg" alt="Code Climate"></a></p>
+
+<p><img src="https://raw.githubusercontent.com/jiahaog/nativefier/master/screenshots/Dock%20Screenshot.png" alt="Dock Screenshot"></p>
+
+<p>You want to make a native wrapper for Google Maps (or any web page).</p>
+
+<div class="highlight highlight-source-shell"><pre>$ nativefier maps.google.com</pre></div>
+
+<p>You're done.</p>
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>Nativefier is a command line tool that allows you to easily create a desktop application for any web site with succinct and minimal configuration. Apps are wrapped by <a href="http://electron.atom.io">Electron</a> in an OS executable (<code>.app</code>, <code>.exe</code>, etc.) for use on Windows, OSX and Linux.</p>
+
+<p>I did this because I was tired of having to <code>⌘-tab</code> or <code>alt-tab</code> to my browser and then search through the numerous open tabs when I was using <a href="http://messenger.com">Facebook Messenger</a> or <a href="http://web.whatsapp.com">Whatsapp Web</a>.</p>
+
+<p>View the changelog <a href="https://github.com/jiahaog/nativefier/blob/master/History.md">here</a>.</p>
+
+<p><a href="https://news.ycombinator.com/item?id=10930718">Relevant Hacker News Thread</a></p>
+
+<h3>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h3>
+
+<ul>
+<li>Automatically retrieves the correct icon and app name</li>
+<li>Flash Support (Needs Testing)</li>
+<li>Javascript and CSS injection</li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>With <a href="https://nodejs.org/">Node.js</a> installed,</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"># for use from the command line</span>
+$ npm install nativefier -g</pre></div>
+
+<h3>
+<a id="optional-dependencies" class="anchor" href="#optional-dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Optional Dependencies</h3>
+
+<h4>
+<a id="png-to-icns-conversion" class="anchor" href="#png-to-icns-conversion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.png</code> to <code>.icns</code> Conversion</h4>
+
+<p>To support usage of a <code>.png</code> for a packaged OSX app icon (currently only supported on OSX), you need the following dependencies.</p>
+
+<h5>
+<a id="sips" class="anchor" href="#sips" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/sips.1.html">sips</a>
+</h5>
+
+<p>Automatically ships with OSX</p>
+
+<h5>
+<a id="iconutil" class="anchor" href="#iconutil" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://developer.apple.com/library/mac/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Optimizing/Optimizing.html">iconutil</a>
+</h5>
+
+<p>You need <a href="https://developer.apple.com/xcode/">XCode</a> installed.</p>
+
+<h5>
+<a id="imagemagick" class="anchor" href="#imagemagick" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://www.imagemagick.org/script/index.php">imagemagick</a>
+</h5>
+
+<div class="highlight highlight-source-shell"><pre>$ brew install imagemagick</pre></div>
+
+<h5>
+<a id="google-chrome" class="anchor" href="#google-chrome" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://www.google.com/chrome/">Google Chrome</a>
+</h5>
+
+<p>Google Chrome is required for flash to be supported. Alternatively, you could download the PepperFlash Chrome plugin and specify the path to it directly with the <code>--flash</code> flag. See the command line options below for more details.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Creating a native desktop app for <a href="http://medium.com">medium.com</a>:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ nativefier <span class="pl-s"><span class="pl-pds">"</span>http://medium.com<span class="pl-pds">"</span></span></pre></div>
+
+<p>Nativefier will intelligently attempt to determine the app name, your OS and processor architecture, among other options. If desired, the app name or other options can be overwritten by specifying the <code>--name "Medium"</code> as part of the command line options, as such.</p>
+
+<pre><code>$ nativefier --name "Some Awesome App" "http://medium.com"
+</code></pre>
+
+<p><strong>For Windows Users:</strong> Take note that the application menu is automatically hidden by default, you can press <code>alt</code> on your keyboard to access it.</p>
+
+<p><strong>For Linux Users:</strong> Do not put spaces if you define the app name yourself with <code>--name</code>, as this will cause problems (tested on Ubuntu 14.04) when pinning a packaged app to the launcher.</p>
+
+<h2>
+<a id="command-line-options" class="anchor" href="#command-line-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command Line Options</h2>
+
+<div class="highlight highlight-source-shell"><pre>$ nativefier [options] <span class="pl-k">&lt;</span>targetUrl<span class="pl-k">&gt;</span> [dest]</pre></div>
+
+<p>Command line options are listed below.</p>
+
+<h4>
+<a id="target-url" class="anchor" href="#target-url" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Target Url</h4>
+
+<p>The url to point the application at.</p>
+
+<h4>
+<a id="dest" class="anchor" href="#dest" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[dest]</h4>
+
+<p>Specifies the destination directory to build the app to, defaults to the current working directory.</p>
+
+<h4>
+<a id="help" class="anchor" href="#help" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Help</h4>
+
+<pre><code>-h, --help
+</code></pre>
+
+<p>Prints the usage information.</p>
+
+<h4>
+<a id="version" class="anchor" href="#version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Version</h4>
+
+<pre><code>-V, --version
+</code></pre>
+
+<p>Prints the version of your <code>nativefier</code> install.</p>
+
+<h4>
+<a id="name" class="anchor" href="#name" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[name]</h4>
+
+<pre><code>-n, --name &lt;value&gt;
+</code></pre>
+
+<p>The name of the application, which will affect strings in titles and the icon.</p>
+
+<p><strong>For Linux Users:</strong> Do not put spaces if you define the app name yourself with <code>--name</code>, as this will cause problems (tested on Ubuntu 14.04) when pinning a packaged app to the launcher.</p>
+
+<h4>
+<a id="platform" class="anchor" href="#platform" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[platform]</h4>
+
+<pre><code>-p, --platform &lt;value&gt;
+</code></pre>
+
+<p>Automatically determined based on the current OS. Can be overwritten by specifying either <code>linux</code>, <code>win32</code>, or <code>darwin</code>.</p>
+
+<h4>
+<a id="arch" class="anchor" href="#arch" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[arch]</h4>
+
+<pre><code>-a, --arch &lt;value&gt;
+</code></pre>
+
+<p>Processor architecture, automatically determined based on the current OS. Can be overwritten by specifying either <code>ia32</code> or <code>x64</code>.</p>
+
+<h4>
+<a id="electron-version" class="anchor" href="#electron-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[electron-version]</h4>
+
+<pre><code>-e, --electron-version &lt;value&gt;
+</code></pre>
+
+<p>Electron version without the <code>v</code>, see <a href="https://github.com/atom/electron/releases">https://github.com/atom/electron/releases</a>.</p>
+
+<h4>
+<a id="overwrite" class="anchor" href="#overwrite" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[overwrite]</h4>
+
+<pre><code>-o, --overwrite
+</code></pre>
+
+<p>Specifies if the destination directory should be overwritten.</p>
+
+<h4>
+<a id="conceal" class="anchor" href="#conceal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[conceal]</h4>
+
+<pre><code>-c, --conceal
+</code></pre>
+
+<p>Specifies if the source code within the nativefied app should be packaged into an archive, defaults to false, <a href="http://electron.atom.io/docs/v0.36.0/tutorial/application-packaging/">read more</a>.</p>
+
+<h4>
+<a id="icon" class="anchor" href="#icon" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[icon]</h4>
+
+<pre><code>-i, --icon &lt;path&gt;
+</code></pre>
+
+<h5>
+<a id="packaging-for-windows-and-linux" class="anchor" href="#packaging-for-windows-and-linux" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Packaging for Windows and Linux</h5>
+
+<p>The icon parameter should be a path to a <code>.png</code> file.</p>
+
+<h5>
+<a id="packaging-for-osx" class="anchor" href="#packaging-for-osx" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Packaging for OSX</h5>
+
+<p>The icon parameter can either be a <code>.icns</code> or a <code>.png</code> file if the optional dependencies listed <a href="#optional-dependencies">above</a> are installed.</p>
+
+<p>With the <code>sips</code>, <code>iconutil</code> and <code>imagemagick convert</code> optional dependencies in your <code>PATH</code>, Nativefier will automatically convert the <code>.png</code> to a <code>.icns</code> for you.</p>
+
+<h6>
+<a id="manually-converting-icns" class="anchor" href="#manually-converting-icns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Manually Converting <code>.icns</code>
+</h6>
+
+<p><a href="https://iconverticons.com/online/">iConvertIcons</a> can be used to convert <code>.pngs</code>, though it can be quite cumbersome.</p>
+
+<p>To retrieve the <code>.icns</code> file from the downloaded file, extract it first and press File &gt; Get Info. Then select the icon in the top left corner of the info window and press <code>⌘-C</code>. Open Preview and press File &gt; New from clipboard and save the <code>.icns</code> file. It took me a while to figure out how to do that and question why a <code>.icns</code> file was not simply provided in the downloaded archive.</p>
+
+<h4>
+<a id="counter" class="anchor" href="#counter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[counter]</h4>
+
+<pre><code>--counter
+</code></pre>
+
+<p>Use a counter that persists even with window focus for the application badge for sites that use an "(X)" format counter in the page title (i.e. Gmail).  Same limitations as the badge option (above).</p>
+
+<h4>
+<a id="width" class="anchor" href="#width" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[width]</h4>
+
+<pre><code>--width &lt;value&gt;
+</code></pre>
+
+<p>Width of the packaged application, defaults to <code>1280px</code>.</p>
+
+<h4>
+<a id="height" class="anchor" href="#height" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[height]</h4>
+
+<pre><code>--height &lt;value&gt;
+</code></pre>
+
+<p>Height of the packaged application, defaults to <code>800px</code>.</p>
+
+<h4>
+<a id="show-menu-bar" class="anchor" href="#show-menu-bar" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[show-menu-bar]</h4>
+
+<pre><code>-m, --show-menu-bar
+</code></pre>
+
+<p>Specifies if the menu bar should be shown.</p>
+
+<h4>
+<a id="user-agent" class="anchor" href="#user-agent" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[user-agent]</h4>
+
+<pre><code>-u, --user-agent &lt;value&gt;
+</code></pre>
+
+<p>Set the user agent to run the created app with.</p>
+
+<h4>
+<a id="honest" class="anchor" href="#honest" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[honest]</h4>
+
+<pre><code>--honest
+</code></pre>
+
+<p>By default, nativefier uses a preset user agent string for your OS and masquerades as a regular Google Chrome browser, so that sites like WhatsApp Web will not say that the current browser is unsupported.</p>
+
+<p>If this flag is passed, it will not override the user agent.</p>
+
+<h4>
+<a id="ignore-certificate" class="anchor" href="#ignore-certificate" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[ignore-certificate]</h4>
+
+<pre><code>--ignore-certificate
+</code></pre>
+
+<p>Forces the packaged app to ignore certificate errors.</p>
+
+<h4>
+<a id="insecure" class="anchor" href="#insecure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[insecure]</h4>
+
+<pre><code>--insecure
+</code></pre>
+
+<p>Forces the packaged app to ignore web security errors.</p>
+
+<h4>
+<a id="flash" class="anchor" href="#flash" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[flash]</h4>
+
+<pre><code>--flash &lt;value&gt;
+</code></pre>
+
+<p>By default, nativefier will automatically try to determine the location of your Google Chrome flash binary. In the event that Flash does not appear to work, you can specify it directly with this command line flag, by retrieving the location of the Flash path from chrome://plugins, under <code>Adobe Flash Player</code> &gt; <code>Location</code>.</p>
+
+<p>From my experience, it might be helpful to pass the <code>--insecure</code> flag if you are using nativefied flash apps, as some <code>https</code> websites tend to serve flash insecurely.</p>
+
+<h4>
+<a id="inject" class="anchor" href="#inject" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[inject]</h4>
+
+<pre><code>--inject &lt;value&gt;
+</code></pre>
+
+<p>Allows you to inject a javascript or css file. This command can be run multiple times to inject the files.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ nativefier http://google.com --inject ./some-js-injection.js --inject ./some-css-injection.css <span class="pl-k">~</span>/Desktop</pre></div>
+
+<h4>
+<a id="full-screen" class="anchor" href="#full-screen" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[full-screen]</h4>
+
+<pre><code>--full-screen
+</code></pre>
+
+<p>Makes the packaged app start in full screen.</p>
+
+<h2>
+<a id="programmatic-api" class="anchor" href="#programmatic-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Programmatic API</h2>
+
+<p>You can use the Nativefier programmatic API as well.</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install --save nativefier</pre></div>
+
+<p>In your <code>.js</code> file:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> nativefier <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>nativefier<span class="pl-pds">'</span></span>).<span class="pl-smi">default</span>;
+
+<span class="pl-c">// possible options</span>
+<span class="pl-k">var</span> options <span class="pl-k">=</span> {
+    name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Web WhatsApp<span class="pl-pds">'</span></span>,
+    targetUrl<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>http://web.whatsapp.com<span class="pl-pds">'</span></span>, <span class="pl-c">// required</span>
+    platform<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>darwin<span class="pl-pds">'</span></span>,
+    arch<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>x64<span class="pl-pds">'</span></span>,
+    version<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>0.36.4<span class="pl-pds">'</span></span>,
+    out<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>~/Desktop<span class="pl-pds">'</span></span>,
+    overwrite<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+    asar<span class="pl-k">:</span> <span class="pl-c1">false</span>, <span class="pl-c">// see conceal</span>
+    icon<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>~/Desktop/icon.png<span class="pl-pds">'</span></span>,
+    counter<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    width<span class="pl-k">:</span> <span class="pl-c1">1280</span>,
+    height<span class="pl-k">:</span> <span class="pl-c1">800</span>,
+    showMenuBar<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    userAgent<span class="pl-k">:</span> <span class="pl-c1">null</span>,
+    ignoreCertificate<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    insecure<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    honest<span class="pl-k">:</span> <span class="pl-c1">false</span>
+};
+
+<span class="pl-en">nativefier</span>(options, <span class="pl-k">function</span>(<span class="pl-smi">error</span>, <span class="pl-smi">appPath</span>) {
+    <span class="pl-k">if</span> (error) {
+        <span class="pl-en">console</span>.<span class="pl-c1">error</span>(error);
+        <span class="pl-k">return</span>;
+    }
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>App has been nativefied to<span class="pl-pds">'</span></span>, appPath);
+});</pre></div>
+
+<p>More description about the <code>options</code> for <code>nativefier</code> can be found at the section on <a href="#command-line-options">command line flags</a>.</p>
+
+<h2>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How It Works</h2>
+
+<p>A template app with the appropriate event listeners and callbacks set up is included in the <code>./app</code> folder. When the <code>nativefier</code> command is executed, this folder is copied to a temporary directory with the appropriate parameters in a configuration file, and is packaged into an app with <a href="https://github.com/maxogden/electron-packager">Electron Packager</a>.</p>
+
+<p>Automatic retrieval of icons is possible thanks to <a href="https://github.com/mat/besticon">besticon</a>.</p>
+
+<h2>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development</h2>
+
+<p>Setting up the project</p>
+
+<div class="highlight highlight-source-shell"><pre>$ git clone https://github.com/jiahaog/nativefier.git
+$ <span class="pl-c1">cd</span> nativefier
+
+<span class="pl-c"># Set up dependencies for the cli tool and the placeholder app</span>
+$ npm run dev-up
+
+<span class="pl-c"># Set up symlinks so that you can run `$ nativefier` for your local changes</span>
+$ npm link</pre></div>
+
+<p>After doing so, you can then run nativefier with your test parameters</p>
+
+<div class="highlight highlight-source-shell"><pre>$ nativefier <span class="pl-k">&lt;</span>...<span class="pl-k">&gt;</span></pre></div>
+
+<p>Don't forget to compile source files (after making changes):</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm run build</pre></div>
+
+<p>Or you can automatically watch the files for changes with:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm run watch</pre></div>
+
+<h2>
+<a id="notes" class="anchor" href="#notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notes</h2>
+
+<p>Tested mostly on OSX, but should work for Windows and Linux.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/jiahaog/nativefier">Nativefier</a> is maintained by <a href="https://github.com/jiahaog">jiahaog</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
