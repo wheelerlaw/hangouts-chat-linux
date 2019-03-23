@@ -172,8 +172,10 @@ function buildMain(inpOptions, callback) {
     [
       (cb) => {
         progress.tick('inferring');
+        console.log("PACKAGE NAME 1: " + options.name)
         optionsFactory(options)
           .then((result) => {
+            console.log("PACKAGE NAME 1.5: " + result.name)
             cb(null, result);
           })
           .catch((error) => {
@@ -182,6 +184,7 @@ function buildMain(inpOptions, callback) {
       },
       (opts, cb) => {
         progress.tick('copying');
+        console.log("PACKAGE NAME 2:" + opts.name)
         buildApp(opts.dir, tmpPath, opts, (error) => {
           if (error) {
             cb(error);

@@ -10,8 +10,8 @@ export default function(platform, str) {
   result = result.replace(/[^\x00-\x7F]/g, '') || DEFAULT_APP_NAME;
 
   // spaces will cause problems with Ubuntu when pinned to the dock
-  if (platform === 'linux') {
-    return _.kebabCase(result);
-  }
+  // if (platform === 'linux') {
+  //   return _.kebabCase(result);
+  // }
   return result;
 }

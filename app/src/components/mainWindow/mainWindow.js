@@ -210,15 +210,17 @@ function createMainWindow(inpOptions, onAppQuit, setDockBadge) {
     withFocusedWindow((focusedWindow) => focusedWindow.webContents.getURL());
 
   const onWillNavigate = (event, urlToGo) => {
-    if (!linkIsInternal(options.targetUrl, urlToGo, options.internalUrls)) {
-      event.preventDefault();
-      shell.openExternal(urlToGo);
-    }
+    console.debug(`Navigating to: ${urlToGo}`);
+    // if (!linkIsInternal(options.targetUrl, urlToGo, options.internalUrls)) {
+    //   event.preventDefault();
+    //   shell.openExternal(urlToGo);
+    // }
   };
 
   let createNewWindow;
 
   const createNewTab = (url, foreground) => {
+    console.debug(`Creating new tab for: ${url}`)
     withFocusedWindow((focusedWindow) => {
       const newTab = createNewWindow(url);
       focusedWindow.addTabbedWindow(newTab);
@@ -243,7 +245,9 @@ function createMainWindow(inpOptions, onAppQuit, setDockBadge) {
     return window;
   };
 
-  const onNewWindow = (event, urlToGo, _, disposition) => {
+  // const onNewWindow = (event, urlToGo, _, disposition) => {
+  const onNewWindow = (event, urlToGo) => {
+    console.debug(`Opening window for: ${urlToGo}`);
     const preventDefault = (newGuest) => {
       event.preventDefault();
       if (newGuest) {
@@ -251,17 +255,19 @@ function createMainWindow(inpOptions, onAppQuit, setDockBadge) {
         event.newGuest = newGuest;
       }
     };
-    onNewWindowHelper(
-      urlToGo,
-      disposition,
-      options.targetUrl,
-      options.internalUrls,
-      preventDefault,
-      shell.openExternal,
-      createAboutBlankWindow,
-      nativeTabsSupported,
-      createNewTab,
-    );
+    // onNewWindowHelper(
+    //   urlToGo,
+    //   disposition,
+    //   options.targetUrl,
+    //   options.internalUrls,
+    //   preventDefault,
+    //   shell.openExternal,
+    //   createAboutBlankWindow,
+    //   nativeTabsSupported,
+    //   createNewTab,
+    // );
+    shell.openExternal(urlToGo);
+    preventDefault();
   };
 
   const sendParamsOnDidFinishLoad = (window) => {
