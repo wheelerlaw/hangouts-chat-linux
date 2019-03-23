@@ -115,10 +115,11 @@ function normalizeAppName(appName, url) {
   return `${normalized}-nativefier-${postFixHash}`;
 }
 
-function changeAppPackageJsonName(appPath, name, url) {
+function changeAppPackageJsonName(appPath, name) {
   const packageJsonPath = path.join(appPath, '/package.json');
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
-  packageJson.name = normalizeAppName(name, url);
+  packageJson.name = name
+  console.log(`PACKAGE NAME: ${name}`)
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson));
 }
 
@@ -149,7 +150,7 @@ function buildApp(src, dest, options, callback) {
         log.warn(err);
       })
       .then(() => {
-        changeAppPackageJsonName(dest, appArgs.name, appArgs.targetUrl);
+        changeAppPackageJsonName(dest, appArgs.name);
         callback();
       });
   });
