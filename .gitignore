@@ -48,3 +48,7 @@ node_modules
 *.iml
 out
 gen
+
+
+hangouts-linux-x64/
+*.tar
